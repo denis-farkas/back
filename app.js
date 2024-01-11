@@ -12,12 +12,13 @@ var cleanersRouter = require("./routes/cleaners");
 
 var app = express();
 const cors = require("cors");
+
 app.use(
   cors({
-    origin(origin, callback) {
+    origin: function (origin, callback) {
       const allowedOrigins = [
         process.env.FRONTEND_URL,
-        "https://front-xi-wheat.vercel.app/",
+        "https://front-xi-wheat.vercel.app",
       ];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
@@ -25,7 +26,6 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    // origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
     optionsSuccessStatus: 200,
     credentials: true,
   })
@@ -41,4 +41,5 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/missions", missionsRouter);
 app.use("/cleaners", cleanersRouter);
+
 module.exports = app;
